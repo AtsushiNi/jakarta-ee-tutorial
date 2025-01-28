@@ -1,0 +1,9 @@
+<persistence>
+  <persistence-unit name="postgresDS" transaction-type="JTA">
+    <jta-data-source>java:/PostgresDS</jta-data-source>
+    <properties>
+        <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+        <property name="jakarta.persistence.sql-load-script-source" value="META-INF/sql/insertData.sql"/>
+    </properties>
+  </persistence-unit>
+</persistence>
