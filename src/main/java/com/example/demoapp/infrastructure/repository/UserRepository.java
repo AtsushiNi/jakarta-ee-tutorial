@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import com.example.demoapp.dto.ReportDto;
 import com.example.demoapp.dto.UserDto;
+import com.example.demoapp.infrastructure.converter.UserConverter;
 import com.example.demoapp.infrastructure.entity.UserEntity;
 
 import jakarta.annotation.PostConstruct;
@@ -26,6 +26,9 @@ public class UserRepository {
     private EntityManager em;
 
     @Inject
+    private UserConverter userConverter;
+
+    @Inject
     private Pbkdf2PasswordHash passwordHash;
 
     @PostConstruct
@@ -39,12 +42,12 @@ public class UserRepository {
 
     public List<UserDto> findAll() {
         Stream<UserEntity> userStream = em.createQuery("select u from UserEntity u", UserEntity.class).getResultStream();
-        return userStream.map(UserRepository::convertToDto).toList();
+        return userStream.map(userConverter::toDto).toList();
     }
 
     public UserDto findById(Integer id) {
         UserEntity user = em.find(UserEntity.class, id);
-        return convertToDtoWithReports(user);
+        return userConverter.toDtoWithReports(user);
     }
 
     public UserDto findByEmail(String email) {
@@ -54,51 +57,16 @@ public class UserRepository {
         if (users.isEmpty()) {
             return null;
         } else {
-            return convertToDto(users.get(0));
+            return userConverter.toDtoWithHashedPassword(users.get(0));
         }
     }
 
     public void create(UserDto user) {
-        UserEntity entity = convertToEntity(user);
+        UserEntity entity = userConverter.toEntity(user);
 
         String hashedPassword = passwordHash.generate(user.getPassword().toCharArray());
         entity.setHashedPassword(hashedPassword);
 
         em.persist(entity);
-    }
-
-    static private UserDto convertToDto(UserEntity entity) {
-        UserDto user = new UserDto();
-        user.setUserId(entity.getUserId());
-        user.setFirstName(entity.getFirstName());
-        user.setLastName(entity.getLastName());
-        user.setEmail(entity.getEmail());
-        user.setHashedPassword(entity.getHashedPassword());
-
-        return user;
-    }
-
-    static private UserDto convertToDtoWithReports(UserEntity entity) {
-        UserDto user = convertToDto(entity);
-        List<ReportDto> reports = entity.getReports().stream().map(report -> {
-            ReportDto reportDto = new ReportDto();
-            reportDto.setReportId(report.getReportId());
-            reportDto.setTitle(report.getTitle());
-            reportDto.setStatus(report.getStatus());
-            reportDto.setCreatedAt(report.getCreatedAt());
-            return reportDto;
-        }).toList();
-        user.setReports(reports);
-
-        return user;
-    }
-
-    static private UserEntity convertToEntity(UserDto dto) {
-        UserEntity user = new UserEntity();
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        user.setEmail(dto.getEmail());
-
-        return user;
     }
 }

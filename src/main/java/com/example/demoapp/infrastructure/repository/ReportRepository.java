@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.example.demoapp.dto.ReportDto;
-import com.example.demoapp.dto.UserDto;
+import com.example.demoapp.infrastructure.converter.ReportConverter;
 import com.example.demoapp.infrastructure.entity.ReportEntity;
-import com.example.demoapp.infrastructure.entity.UserEntity;
 import com.example.demoapp.type.Status;
 
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -21,18 +21,21 @@ public class ReportRepository {
     @PersistenceContext
     private EntityManager em;
 
+    @Inject
+    private ReportConverter reportConverter;
+
     public List<ReportDto> findAll() {
         Stream<ReportEntity> reportStream = em.createQuery("select r from ReportEntity r", ReportEntity.class).getResultStream();
-        return reportStream.map(ReportRepository::convertToDto).toList();
+        return reportStream.map(reportConverter::toDto).toList();
     }
 
     public ReportDto findById(Integer id) {
         ReportEntity report = em.find(ReportEntity.class, id);
-        return convertToDto(report);
+        return reportConverter.toDto(report);
     }
     
     public void create(ReportDto report) {
-        ReportEntity entity = convertToEntity(report);
+        ReportEntity entity = reportConverter.toEntity(report);
 
         em.persist(entity);
     }
@@ -56,44 +59,5 @@ public class ReportRepository {
         entity.setStatus(Status.C01_CREATING);
 
         em.merge(entity);
-    }
-
-    static private ReportDto convertToDto(ReportEntity entity) {
-        ReportDto report = new ReportDto();
-        report.setReportId(entity.getReportId());
-        report.setTitle(entity.getTitle());
-        report.setDetail(entity.getDetail());
-        report.setStatus(entity.getStatus());
-        report.setCreatedAt(entity.getCreatedAt());
-        report.setUpdatedAt(entity.getUpdatedAt());
-        report.setCreator(convertToDto(entity.getCreator()));
-
-        return report;
-    }
-
-    static private ReportEntity convertToEntity(ReportDto dto) {
-        ReportEntity report = new ReportEntity();
-        report.setReportId(dto.getReportId());
-        report.setTitle(dto.getTitle());
-        report.setDetail(dto.getDetail());
-        report.setStatus(dto.getStatus());
-        report.setCreatedAt(dto.getCreatedAt());
-        report.setUpdatedAt(dto.getCreatedAt());
-
-        UserEntity creator = new UserEntity();
-        creator.setUserId(dto.getCreator().getUserId());
-        report.setCreator(creator);
-
-        return report;
-    }
-
-    static private UserDto convertToDto(UserEntity entity) {
-        UserDto user = new UserDto();
-        user.setUserId(entity.getUserId());
-        user.setFirstName(entity.getFirstName());
-        user.setLastName(entity.getLastName());
-        user.setEmail(entity.getEmail());
-
-        return user;
     }
 }
