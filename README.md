@@ -10,3 +10,5 @@ Zennに投稿した[Jakarta EE チュートリアル](https://zenn.dev/atsushi_n
 ## デモアプリの概要
 
 「ワークフローアプリ」
+
+https://github.com/user-attachments/assets/ebf99279-c849-4c09-a972-88ce46e11689
