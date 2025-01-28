@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:h="jakarta.faces.html">
+<html xmlns:h="jakarta.faces.html" xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>明細ページ</title>
     </h:head>
@@ -7,18 +7,12 @@
         <h2>明細の作成</h2>
         <h:form>
             <div>
-                タイトル：<h:inputText value="#{reportNewBean.title}" />
+                タイトル：<p:inputText value="#{reportNewBean.title}" />
             </div>
             <div>
-                詳細：<h:inputTextarea value="#{reportNewBean.detail}" rows="6" />
+                詳細：<p:inputTextarea value="#{reportNewBean.detail}" rows="6" />
             </div>
-            <h:commandButton value="送信" />
+            <p:commandButton value="送信" />
         </h:form>
-        <div>
-            タイトル：<h:outputText value="#{reportNewBean.title}" />
-        </div>
-        <div>
-            詳細：<h:outputText value="#{reportNewBean.detail}" style="white-space: pre-wrap;"/>
-        </div>
     </h:body>
 </html>
