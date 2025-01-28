@@ -24,6 +24,7 @@ public class UserConverter {
         userDto.setFirstName(userEntity.getFirstName());
         userDto.setLastName(userEntity.getLastName());
         userDto.setEmail(userEntity.getEmail());
+        userDto.setImageData(userEntity.getImageData());
 
         return userDto;
     }

@@ -6,6 +6,11 @@
         <h:form>
             <p:dataTable value="#{userListBean.users}" var="user" selectionMode="single" selection="#{userListBean.selectedUser}" rowKey="#{user.userId}">
                 <p:ajax event="rowSelect" listener="#{userListBean.navigateToShowPage}" />
+                <p:column class="w-3rem">
+                    <p:avatar size="large" shape="circle">
+                        <p:graphicImage value="#{user.imageData}" stream="false" rendered="#{user.imageData != null}" />
+                    </p:avatar>
+                </p:column>
                 <p:column headerText="ユーザー名">
                     <h:outputText value="#{user.fullName}" />
                 </p:column>
