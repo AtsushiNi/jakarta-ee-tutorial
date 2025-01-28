@@ -6,7 +6,15 @@
 
         <h:form>
             <div>
-                <h2>#{userShowBean.firstName} #{userShowBean.lastName}</h2>
+                <div class="flex flex-column align-items-center text-center">
+                    <p:graphicImage value="#{userShowBean.imageData}" stream="false" rendered="#{userShowBean.imageData != null}" class="border-circle w-8rem" />
+                    <h2>#{userShowBean.firstName} #{userShowBean.lastName}</h2>
+                </div>
+                <p:fileUpload listener="#{userShowBean.handleImageUpload}" mode="advanced" update="@form" auto="true">
+                    <p:validateFile sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/" />
+                </p:fileUpload>
+
+                <p:growl id="messages" showDetail="true" />
 
                 <h3>起票した明細一覧</h3>
                 <p:dataTable value="#{userShowBean.reports}" var="report" selection="#{userShowBean.selectedReport}" rowKey="#{report.reportId}">

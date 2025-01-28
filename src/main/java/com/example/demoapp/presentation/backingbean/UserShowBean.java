@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.primefaces.event.FileUploadEvent;
+
 import com.example.demoapp.dto.ReportDto;
 import com.example.demoapp.dto.UserDto;
 import com.example.demoapp.infrastructure.repository.UserRepository;
@@ -26,6 +28,7 @@ public class UserShowBean implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+    private byte[] imageData;
     private List<ReportDto> reports;
     private ReportDto selectedReport;
 
@@ -46,7 +49,19 @@ public class UserShowBean implements Serializable {
             lastName = user.getLastName();
             email = user.getEmail();
             reports = user.getReports();
+            imageData = user.getImageData();
         }
+    }
+
+    public void handleImageUpload(FileUploadEvent event) {
+        byte[] imageData = event.getFile().getContent();
+        setImageData(imageData);
+
+        UserDto userDto = new UserDto();
+        userDto.setUserId(userId);
+        userDto.setImageData(imageData);
+
+        userRepository.update(userDto);
     }
 
     public void navigateToShowPage() throws IOException {

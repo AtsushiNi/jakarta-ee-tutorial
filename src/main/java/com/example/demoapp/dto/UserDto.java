@@ -18,6 +18,7 @@ public class UserDto {
     private String email;
     private String password;
     private String hashedPassword;
+    private byte[] imageData;
     private List<ReportDto> reports;
 
     public String getFullName() {

@@ -1,5 +1,9 @@
 package com.example.demoapp.infrastructure.repository;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +71,36 @@ public class UserRepository {
         String hashedPassword = passwordHash.generate(user.getPassword().toCharArray());
         entity.setHashedPassword(hashedPassword);
 
+        entity.setImageData(getDefaultUserImage());
+
         em.persist(entity);
+    }
+
+    public void update(UserDto user) {
+        UserEntity userEntity = em.find(UserEntity.class, user.getUserId());
+
+        userEntity.setImageData(user.getImageData());
+
+        em.merge(userEntity);
+    }
+
+    private byte[] getDefaultUserImage() {
+        try (InputStream inputStream = UserRepository.class.getClassLoader().getResourceAsStream("default-user.png");
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();) {
+            if (inputStream == null) {
+                throw new IllegalArgumentException("Resource not found: default-user.png");
+            }
+            byte[] buffer = new byte[1024];
+            while(true) {
+                int length = inputStream.read(buffer);
+                if(length < 0) {
+                    break;
+                }
+                outputStream.write(buffer, 0, length);
+            }
+            return outputStream.toByteArray();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 }
