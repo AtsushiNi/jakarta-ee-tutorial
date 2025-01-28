@@ -1,0 +1,34 @@
+<ui:composition template="templates/template.xhtml" xmlns:h="jakarta.faces.html" xmlns:ui="jakarta.faces.facelets" xmlns:p="http://primefaces.org/ui">
+    <ui:define name="title">作成ページ</ui:define>
+
+    <ui:define name="content">
+        <h2>ユーザーの作成</h2>
+        <h:form>
+            <div class="ui-fluid formgrid grid">
+                <div class="field col-12 md:col-6">
+                    <h:outputText for="first-name-input" value="姓" />
+                    <p:inputText id="first-name-input" value="#{userNewBean.firstName}" />
+                    <h:message for="first-name-input" style="color: red" /> 
+                </div>
+                <div class="field col-12 md:col-6">
+                    <h:outputText for="last-name-input" value="名" />
+                    <p:inputText id="last-name-input" value="#{userNewBean.lastName}" />
+                    <h:message for="last-name-input" style="color: red" /> 
+                </div>
+                <div class="field col-12">
+                    <h:outputText for="email-input" value="メールアドレス" />
+                    <p:inputText id="email-input" value="#{userNewBean.email}" />
+                    <h:message for="email-input" style="color: red" /> 
+                </div>
+                <div class="field col-12 md:col-6">
+                    <h:outputText for="password-input" value="パスワード" />
+                    <p:password id="password-input" value="#{userNewBean.password}" toggleMask="true"/>
+                    <h:message for="password-input" style="color: red" /> 
+                </div>
+            </div>
+            <div class="flex justify-content-end">
+                <p:commandButton value="作成" action="#{userNewBean.create()}" ajax="false"/>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

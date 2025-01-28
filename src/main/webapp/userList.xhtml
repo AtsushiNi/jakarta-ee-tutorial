@@ -1,0 +1,18 @@
+<ui:composition template="templates/template.xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets" xmlns:p="http://primefaces.org/ui">
+    <ui:define name="title">一覧ページ</ui:define>
+
+    <ui:define name="content">
+        <h2>ユーザーの一覧</h2>
+        <h:form>
+            <p:dataTable value="#{userListBean.users}" var="user" selectionMode="single" selection="#{userListBean.selectedUser}" rowKey="#{user.userId}">
+                <p:ajax event="rowSelect" listener="#{userListBean.navigateToShowPage}" />
+                <p:column headerText="ユーザー名">
+                    <h:outputText value="#{user.fullName}" />
+                </p:column>
+                <p:column headerText="メールアドレス">
+                    <h:outputText value="#{user.email}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
