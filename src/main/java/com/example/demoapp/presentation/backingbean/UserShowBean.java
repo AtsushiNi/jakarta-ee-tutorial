@@ -1,21 +1,24 @@
 package com.example.demoapp.presentation.backingbean;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
+import com.example.demoapp.dto.ReportDto;
 import com.example.demoapp.dto.UserDto;
 import com.example.demoapp.infrastructure.repository.UserRepository;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.ExternalContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 
 @Named
-@RequestScoped
+@ViewScoped
 @Getter
 @Setter
 public class UserShowBean implements Serializable {
@@ -23,6 +26,8 @@ public class UserShowBean implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+    private List<ReportDto> reports;
+    private ReportDto selectedReport;
 
     @Inject
     private UserRepository userRepository;
@@ -40,6 +45,12 @@ public class UserShowBean implements Serializable {
             firstName = user.getFirstName();
             lastName = user.getLastName();
             email = user.getEmail();
+            reports = user.getReports();
         }
+    }
+
+    public void navigateToShowPage() throws IOException {
+        String redirectUrl = externalContext.getRequestContextPath() + "/reportShow.xhtml?reportId=" + selectedReport.getReportId();
+        externalContext.redirect(redirectUrl);
     }
 }

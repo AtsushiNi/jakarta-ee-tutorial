@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.example.demoapp.dto.ReportDto;
+import com.example.demoapp.dto.UserDto;
 import com.example.demoapp.infrastructure.entity.ReportEntity;
+import com.example.demoapp.infrastructure.entity.UserEntity;
 import com.example.demoapp.type.Status;
 
 import jakarta.enterprise.context.RequestScoped;
@@ -64,6 +66,7 @@ public class ReportRepository {
         report.setStatus(entity.getStatus());
         report.setCreatedAt(entity.getCreatedAt());
         report.setUpdatedAt(entity.getUpdatedAt());
+        report.setCreator(convertToDto(entity.getCreator()));
 
         return report;
     }
@@ -77,6 +80,20 @@ public class ReportRepository {
         report.setCreatedAt(dto.getCreatedAt());
         report.setUpdatedAt(dto.getCreatedAt());
 
+        UserEntity creator = new UserEntity();
+        creator.setUserId(dto.getCreator().getUserId());
+        report.setCreator(creator);
+
         return report;
+    }
+
+    static private UserDto convertToDto(UserEntity entity) {
+        UserDto user = new UserDto();
+        user.setUserId(entity.getUserId());
+        user.setFirstName(entity.getFirstName());
+        user.setLastName(entity.getLastName());
+        user.setEmail(entity.getEmail());
+
+        return user;
     }
 }

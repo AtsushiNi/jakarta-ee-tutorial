@@ -1,4 +1,4 @@
-<ui:composition template="templates/template.xhtml" xmlns:h="jakarta.faces.html" xmlns:ui="jakarta.faces.facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="templates/template.xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets" xmlns:p="http://primefaces.org/ui">
     <ui:define name="title">表示ページ</ui:define>
 
     <ui:define name="content">
@@ -7,6 +7,22 @@
         <h:form>
             <div>
                 <h2>#{userShowBean.firstName} #{userShowBean.lastName}</h2>
+
+                <h3>起票した明細一覧</h3>
+                <p:dataTable value="#{userShowBean.reports}" var="report" selection="#{userShowBean.selectedReport}" rowKey="#{report.reportId}">
+                    <p:ajax event="rowSelect" listener="#{userShowBean.navigateToShowPage}" />
+                    <p:column headerText="タイトル">
+                        <h:outputText value="#{report.title}" />
+                    </p:column>
+                    <p:column headerText="ステータス">
+                        <h:outputText value="#{report.status.label}" />
+                    </p:column>
+                    <p:column headerText="作成日時">
+                        <h:outputText value="#{report.createdAt}" converter="localDateTimeConverter">
+                            <f:attribute name="pattern" value="yyyy-MM-dd HH:mm" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
             </div>
         </h:form>
     </ui:define>

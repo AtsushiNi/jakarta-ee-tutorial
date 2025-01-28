@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import com.example.demoapp.dto.ReportDto;
 import com.example.demoapp.dto.UserDto;
 import com.example.demoapp.infrastructure.entity.UserEntity;
 
@@ -43,7 +44,7 @@ public class UserRepository {
 
     public UserDto findById(Integer id) {
         UserEntity user = em.find(UserEntity.class, id);
-        return convertToDto(user);
+        return convertToDtoWithReports(user);
     }
 
     public UserDto findByEmail(String email) {
@@ -73,6 +74,21 @@ public class UserRepository {
         user.setLastName(entity.getLastName());
         user.setEmail(entity.getEmail());
         user.setHashedPassword(entity.getHashedPassword());
+
+        return user;
+    }
+
+    static private UserDto convertToDtoWithReports(UserEntity entity) {
+        UserDto user = convertToDto(entity);
+        List<ReportDto> reports = entity.getReports().stream().map(report -> {
+            ReportDto reportDto = new ReportDto();
+            reportDto.setReportId(report.getReportId());
+            reportDto.setTitle(report.getTitle());
+            reportDto.setStatus(report.getStatus());
+            reportDto.setCreatedAt(report.getCreatedAt());
+            return reportDto;
+        }).toList();
+        user.setReports(reports);
 
         return user;
     }

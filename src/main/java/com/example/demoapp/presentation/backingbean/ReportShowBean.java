@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 import com.example.demoapp.dto.ReportDto;
+import com.example.demoapp.dto.UserDto;
 import com.example.demoapp.infrastructure.repository.ReportRepository;
 import com.example.demoapp.type.Status;
 
@@ -27,6 +28,7 @@ public class ReportShowBean implements Serializable {
     private Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private UserDto creator;
 
     @Inject
     private ReportRepository reportRepository;
@@ -64,6 +66,7 @@ public class ReportShowBean implements Serializable {
             status = report.getStatus();
             createdAt = report.getCreatedAt();
             updatedAt = report.getUpdatedAt();
+            creator = report.getCreator();
         }
     }
 }
