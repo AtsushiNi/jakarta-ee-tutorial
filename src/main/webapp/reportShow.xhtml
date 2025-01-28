@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:h="jakarta.faces.html" xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>表示ページ</title>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css" />
+    </h:head>
+    <h:body>
+        <h2>#{reportShowBean.title}</h2>
+        <div>
+            <div>
+                <h:outputText value="#{reportShowBean.detail}" style="white-space: pre-wrap;" />
+            </div>
+        </div>
+    </h:body>
+</html>
