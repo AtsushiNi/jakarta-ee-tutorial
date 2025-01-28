@@ -1,7 +1,6 @@
 package com.example.demoapp.presentation.backingbean;
 
-import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 import com.example.demoapp.dto.ReportDto;
 import com.example.demoapp.infrastructure.repository.ReportRepository;
@@ -18,9 +17,10 @@ import lombok.Setter;
 @RequestScoped
 @Getter
 @Setter
-public class ReportListBean {
-    private List<ReportDto> reports;
-    private ReportDto selectedReport;
+public class ReportShowBean {
+    private Integer reportId;
+    private String title;
+    private String detail;
 
     @Inject
     private ReportRepository reportRepository;
@@ -29,12 +29,13 @@ public class ReportListBean {
     private ExternalContext externalContext;
 
     @PostConstruct
-    public void init() {
-        reports = reportRepository.findAll();
-    }
-
-    public void navigateToShowPage() throws IOException {
-        String redirectUrl = externalContext.getRequestContextPath() + "/reportShow.xhtml?reportId=" + selectedReport.getReportId();
-        externalContext.redirect(redirectUrl);
+    public void fetchReport() {
+        Map<String, String> params = externalContext.getRequestParameterMap();
+        reportId = Integer.parseInt(params.get("reportId"));
+        ReportDto report = reportRepository.findById(reportId);
+        if (report != null) {
+            title = report.getTitle();
+            detail = report.getDetail();
+        }
     }
 }

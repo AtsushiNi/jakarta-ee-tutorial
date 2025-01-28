@@ -7,7 +7,8 @@
     <h:body>
         <h2>明細の一覧</h2>
         <h:form>
-            <p:dataTable value="#{reportListBean.reports}" var="report">
+            <p:dataTable value="#{reportListBean.reports}" var="report" selectionMode="single" selection="#{reportListBean.selectedReport}" rowKey="#{report.reportId}">
+                <p:ajax event="rowSelect" listener="#{reportListBean.navigateToShowPage}" />
                 <p:column headerText="タイトル">
                     <h:outputText value="#{report.title}" />
                 </p:column>
