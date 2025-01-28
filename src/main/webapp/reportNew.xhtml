@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:h="jakarta.faces.html">
+<html xmlns:h="jakarta.faces.html" xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>明細ページ</title>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css" />
     </h:head>
     <h:body>
         <h2>明細の作成</h2>
         <h:form>
-            <div>
-                タイトル：<h:inputText value="#{reportNewBean.title}" />
+            <div class="ui-fluid">
+                <div class="field">
+                    <h:outputText for="title-input" value="タイトル" />
+                    <p:inputText id="title-input" value="#{reportNewBean.title}" />
+                    <h:message for="title-input" style="color: red" />
+                </div>
+                <div class="field">
+                    <h:outputText for="detail-input" value="詳細" />
+                    <p:inputTextarea id="detail-input" value="#{reportNewBean.detail}" rows="6" />
+                </div>
             </div>
-            <div>
-                詳細：<h:inputTextarea value="#{reportNewBean.detail}" rows="6" />
+            <div class="flex justify-content-end">
+                <p:commandButton value="送信" ajax="false" />
             </div>
-            <h:commandButton value="送信" />
         </h:form>
-        <div>
-            タイトル：<h:outputText value="#{reportNewBean.title}" />
-        </div>
-        <div>
-            詳細：<h:outputText value="#{reportNewBean.detail}" style="white-space: pre-wrap;"/>
-        </div>
     </h:body>
 </html>
