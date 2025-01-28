@@ -1,0 +1,12 @@
+<ui:composition xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets" xmlns:p="http://primefaces.org/ui" >
+    <p:menubar orientation="horizontal" class="shadow-2">
+        <f:facet name="start">
+            <h:outputText value="Demo App" style="line-height: 47px; margin-right: 40px;" />
+        </f:facet>
+        <p:divider layout="vertical" />
+        <p:submenu label="Reports" icon="pi pi-fw pi-file">
+            <p:menuitem value="List" outcome="reportList" icon="pi pi-fw pi-list" />
+            <p:menuitem value="New" outcome="reportNew" icon="pi pi-fw pi-plus" />
+        </p:submenu>
+    </p:menubar>
+</ui:composition>

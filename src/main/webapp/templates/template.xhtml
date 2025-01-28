@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns:h="jakarta.faces.html" xmlns:ui="jakarta.faces.facelets">
+    <h:head>
+        <title>
+            <ui:insert name="title"></ui:insert>
+        </title>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css" />
+    </h:head>
+
+    <h:body style="margin: 0;">
+        <!-- ヘッダー -->
+        <ui:include src="/fragments/header.xhtml" />
+
+        <!-- コンテンツ -->
+        <div class="container" style="width: 80%; margin: 50px auto;">
+            <ui:insert name="content"></ui:insert>
+        </div>
+    </h:body>
+
+</html>
