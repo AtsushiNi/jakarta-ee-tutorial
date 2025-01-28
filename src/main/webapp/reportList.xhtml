@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html xmlns:h="jakarta.faces.html" xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>一覧ページ</title>
-        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css" />
-    </h:head>
-    <h:body>
+<ui:composition template="templates/template.xhtml" xmlns:h="jakarta.faces.html" xmlns:ui="jakarta.faces.facelets" xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">一覧ページ</ui:define>
+
+    <ui:define name="content">
         <h2>明細の一覧</h2>
         <h:form>
             <p:dataTable value="#{reportListBean.reports}" var="report" selectionMode="single" selection="#{reportListBean.selectedReport}" rowKey="#{report.reportId}">
@@ -14,5 +12,6 @@
                 </p:column>
             </p:dataTable>
         </h:form>
-    </h:body>
-</html>
+    </ui:define>
+
+</ui:composition>

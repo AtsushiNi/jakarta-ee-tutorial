@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html xmlns:h="jakarta.faces.html" xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>明細ページ</title>
-        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css" />
-    </h:head>
-    <h:body>
+<ui:composition template="templates/template.xhtml" xmlns:h="jakarta.faces.html" xmlns:ui="jakarta.faces.facelets" xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">起票ページ</ui:define>
+
+    <ui:define name="content">
         <h2>明細の作成</h2>
         <h:form>
             <div class="ui-fluid">
@@ -22,5 +20,6 @@
                 <p:commandButton value="送信" ajax="false" action="#{reportNewBean.create()}" />
             </div>
         </h:form>
-    </h:body>
-</html>
+    </ui:define>
+
+</ui:composition>
