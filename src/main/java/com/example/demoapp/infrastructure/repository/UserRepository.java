@@ -9,6 +9,7 @@ import com.example.demoapp.infrastructure.entity.UserEntity;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 @RequestScoped
@@ -26,6 +27,17 @@ public class UserRepository {
     public UserDto findById(Integer id) {
         UserEntity user = em.find(UserEntity.class, id);
         return convertToDto(user);
+    }
+
+    public UserDto findByEmail(String email) {
+        TypedQuery<UserEntity> query = em.createQuery("select u from UserEntity u where u.email = :email", UserEntity.class);
+        query.setParameter("email", email);
+        List<UserEntity> users = query.getResultList();
+        if (users.isEmpty()) {
+            return null;
+        } else {
+            return convertToDto(users.get(0));
+        }
     }
 
     public void create(UserDto user) {
