@@ -1,1 +1,1 @@
-INSERT INTO reports(title) VALUES ('テスト明細1');
+INSERT INTO reports(title, status) VALUES ('テスト明細1', 'C01_CREATING');

@@ -2,6 +2,7 @@ package com.example.demoapp.presentation.backingbean;
 
 import com.example.demoapp.dto.ReportDto;
 import com.example.demoapp.infrastructure.repository.ReportRepository;
+import com.example.demoapp.type.Status;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -27,6 +28,7 @@ public class ReportNewBean {
         ReportDto newReport = new ReportDto();
         newReport.setTitle(title);
         newReport.setDetail(detail);
+        newReport.setStatus(Status.C01_CREATING);
         reportRepository.create(newReport);
         return "/reportList.xhtml?faces-redirect=true";
     }

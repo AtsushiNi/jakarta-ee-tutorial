@@ -3,10 +3,26 @@
     <ui:define name="title">表示ページ</ui:define>
 
     <ui:define name="content">
-        <h2>#{reportShowBean.title}</h2>
-        <div>
-            <div>
+        <p:importEnum type="com.example.demoapp.type.Status" var="Status" />
+
+        <h:form>
+            <div class="flex flex-wrap justify-content-between">
+                <h2>#{reportShowBean.title}</h2>
+                <div>
+                    <p:commandButton value="再鑑依頼" action="#{reportShowBean.apply}" update="@all" rendered="#{Status.C01_CREATING.equals(reportShowBean.status)}" class="ml-2" />
+                    <p:commandButton value="再鑑" action="#{reportShowBean.approve}" update="@all" rendered="#{Status.C02_WAIT_REVIEW.equals(reportShowBean.status)}" class="ml-2" />
+                    <p:commandButton value="差戻" action="#{reportShowBean.remand}" update="@all" rendered="#{Status.C02_WAIT_REVIEW.equals(reportShowBean.status)}" class="ml-2" />
+                </div>
+            </div>
+        </h:form>
+
+        <div class="grid">
+            <div class="field col-12 my-4">
                 <h:outputText value="#{reportShowBean.detail}" style="white-space: pre-wrap;" />
+            </div>
+            <div class="field col-12 md:col-6">
+                <p:outputLabel for="status-output" value="ステータス" style="width: 120px" />
+                <h:outputText id="status-output" value="#{reportShowBean.status.label}" />
             </div>
         </div>
     </ui:define>
