@@ -28,6 +28,6 @@ public class UserEntity extends BaseEntity {
     @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "hashed_password", nullable = false)
+    private String hashedPassword;
 }

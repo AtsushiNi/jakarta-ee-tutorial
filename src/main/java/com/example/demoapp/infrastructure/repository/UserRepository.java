@@ -1,15 +1,20 @@
 package com.example.demoapp.infrastructure.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import com.example.demoapp.dto.UserDto;
 import com.example.demoapp.infrastructure.entity.UserEntity;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import jakarta.transaction.Transactional;
 
 @RequestScoped
@@ -18,6 +23,18 @@ public class UserRepository {
 
     @PersistenceContext
     private EntityManager em;
+
+    @Inject
+    private Pbkdf2PasswordHash passwordHash;
+
+    @PostConstruct
+    public void initPasswordHash() {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("Pbkdf2PasswordHash.Iterations", "3072");
+        parameters.put("Pbkdf2PasswordHash.Algorithm", "PBKDF2WithHmacSHA512");
+        parameters.put("Pbkdf2PasswordHash.SaltSizeBytes", "64");
+        passwordHash.initialize(parameters);
+    }
 
     public List<UserDto> findAll() {
         Stream<UserEntity> userStream = em.createQuery("select u from UserEntity u", UserEntity.class).getResultStream();
@@ -42,7 +59,9 @@ public class UserRepository {
 
     public void create(UserDto user) {
         UserEntity entity = convertToEntity(user);
-        entity.setPassword(user.getPassword());
+
+        String hashedPassword = passwordHash.generate(user.getPassword().toCharArray());
+        entity.setHashedPassword(hashedPassword);
 
         em.persist(entity);
     }
@@ -53,7 +72,7 @@ public class UserRepository {
         user.setFirstName(entity.getFirstName());
         user.setLastName(entity.getLastName());
         user.setEmail(entity.getEmail());
-        user.setPassword(entity.getPassword());
+        user.setHashedPassword(entity.getHashedPassword());
 
         return user;
     }
