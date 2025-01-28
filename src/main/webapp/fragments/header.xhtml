@@ -3,7 +3,9 @@
         <f:facet name="start">
             <h:outputText value="Demo App" style="line-height: 47px; margin-right: 40px;" />
         </f:facet>
+
         <p:divider layout="vertical" />
+
         <p:submenu label="Reports" icon="pi pi-fw pi-file">
             <p:menuitem value="List" outcome="reportList" icon="pi pi-fw pi-list" />
             <p:menuitem value="New" outcome="reportNew" icon="pi pi-fw pi-plus" />
@@ -12,5 +14,11 @@
             <p:menuitem value="List" outcome="userList" icon="pi pi-fw pi-users" />
             <p:menuitem value="New" outcome="userNew" icon="pi pi-fw pi-user-plus" />
         </p:submenu>
+
+        <p:menuitem value="log out" action="#{headerBean.logout}" rendered="#{headerBean.loginUser != null}" />
+
+        <f:facet name="end">
+            <h:outputText value="#{headerBean.loginUser.fullName}" rendered="#{headerBean.loginUser != null}" style="padding: 0.7rem; display: block;" />
+        </f:facet>
     </p:menubar>
 </ui:composition>
