@@ -1,6 +1,7 @@
 package com.example.demoapp.presentation.backingbean;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import com.example.demoapp.dto.ReportDto;
@@ -24,6 +25,8 @@ public class ReportShowBean implements Serializable {
     private String title;
     private String detail;
     private Status status;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @Inject
     private ReportRepository reportRepository;
@@ -32,29 +35,35 @@ public class ReportShowBean implements Serializable {
     private ExternalContext externalContext;
 
     @PostConstruct
-    public void fetchReport() {
+    public void initReport() {
         Map<String, String> params = externalContext.getRequestParameterMap();
         reportId = Integer.parseInt(params.get("reportId"));
+        fetchReport();
+    }
+
+    public void apply() {
+        reportRepository.apply(reportId);
+        fetchReport();
+    }
+
+    public void approve() {
+        reportRepository.approve(reportId);
+        fetchReport();
+    }
+
+    public void remand() {
+        reportRepository.remand(reportId);
+        fetchReport();
+    }
+
+    private void fetchReport() {
         ReportDto report = reportRepository.findById(reportId);
         if (report != null) {
             title = report.getTitle();
             detail = report.getDetail();
             status = report.getStatus();
+            createdAt = report.getCreatedAt();
+            updatedAt = report.getUpdatedAt();
         }
-    }
-
-    public void apply() {
-        reportRepository.apply(reportId);
-        status = Status.C02_WAIT_REVIEW;
-    }
-
-    public void approve() {
-        reportRepository.approve(reportId);
-        status = Status.C03_COMPLETED;
-    }
-
-    public void remand() {
-        reportRepository.remand(reportId);
-        status = Status.C01_CREATING;
     }
 }

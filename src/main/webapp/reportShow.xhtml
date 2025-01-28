@@ -24,6 +24,14 @@
                 <p:outputLabel for="status-output" value="ステータス" style="width: 120px" />
                 <h:outputText id="status-output" value="#{reportShowBean.status.label}" />
             </div>
+            <div class="field col-12 md:col-6">
+                <p:outputLabel for="created-at-output" value="作成日時" style="width: 120px" />
+                <h:outputText id="created-at-output" value="#{reportShowBean.createdAt}" converter="localDateTimeConverter" />
+            </div>
+            <div class="field col-12 md:col-6">
+                <p:outputLabel for="updated-at-output" value="最終更新日時" style="width: 120px" />
+                <h:outputText id="updated-at-output" value="#{reportShowBean.updatedAt}" converter="localDateTimeConverter" />
+            </div>
         </div>
     </ui:define>
 

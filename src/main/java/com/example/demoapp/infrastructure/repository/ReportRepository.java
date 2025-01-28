@@ -62,6 +62,8 @@ public class ReportRepository {
         report.setTitle(entity.getTitle());
         report.setDetail(entity.getDetail());
         report.setStatus(entity.getStatus());
+        report.setCreatedAt(entity.getCreatedAt());
+        report.setUpdatedAt(entity.getUpdatedAt());
 
         return report;
     }
@@ -72,6 +74,8 @@ public class ReportRepository {
         report.setTitle(dto.getTitle());
         report.setDetail(dto.getDetail());
         report.setStatus(dto.getStatus());
+        report.setCreatedAt(dto.getCreatedAt());
+        report.setUpdatedAt(dto.getCreatedAt());
 
         return report;
     }
