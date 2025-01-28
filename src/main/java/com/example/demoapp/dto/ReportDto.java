@@ -1,5 +1,7 @@
 package com.example.demoapp.dto;
 
+import java.time.LocalDateTime;
+
 import com.example.demoapp.type.Status;
 
 import lombok.AllArgsConstructor;
@@ -16,4 +18,6 @@ public class ReportDto {
     private String title;
     private String detail; 
     private Status status;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

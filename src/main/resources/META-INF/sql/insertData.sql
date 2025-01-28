@@ -1,1 +1,1 @@
-INSERT INTO reports(title, status) VALUES ('テスト明細1', 'C01_CREATING');
+INSERT INTO reports(title, status, created_at, updated_at) VALUES ('テスト明細1', 'C01_CREATING', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

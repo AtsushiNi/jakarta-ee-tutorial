@@ -1,4 +1,4 @@
-<ui:composition template="templates/template.xhtml" xmlns:h="jakarta.faces.html" xmlns:ui="jakarta.faces.facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="templates/template.xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets" xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="title">一覧ページ</ui:define>
 
@@ -12,6 +12,16 @@
                 </p:column>
                 <p:column headerText="ステータス">
                     <h:outputText value="#{report.status.label}" />
+                </p:column>
+                <p:column headerText="起票日時">
+                    <h:outputText value="#{report.createdAt}" converter="localDateTimeConverter">
+                        <f:attribute name="pattern" value="yyyy-MM-dd HH:mm" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="最終更新日時">
+                    <h:outputText value="#{report.updatedAt}" converter="localDateTimeConverter">
+                        <f:attribute name="pattern" value="yyyy-MM-dd HH:mm" />
+                    </h:outputText>
                 </p:column>
             </p:dataTable>
         </h:form>
