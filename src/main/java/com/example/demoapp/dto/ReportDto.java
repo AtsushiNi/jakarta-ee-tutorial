@@ -1,6 +1,7 @@
 package com.example.demoapp.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.example.demoapp.type.Status;
 
@@ -21,4 +22,5 @@ public class ReportDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private UserDto creator;
+    private List<HistoryDto> histories;
 }
