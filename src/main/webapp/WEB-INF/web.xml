@@ -14,4 +14,26 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>protected</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>USER</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>excluded</web-resource-name>
+			<url-pattern>/login.xhtml</url-pattern>
+			<url-pattern>/login_error.xhtml</url-pattern>
+			<url-pattern>/jakarta.faces.resource/*</url-pattern>
+		</web-resource-collection>
+	</security-constraint>
+
+	<security-role>
+		<role-name>USER</role-name>
+	</security-role>
 </web-app>
