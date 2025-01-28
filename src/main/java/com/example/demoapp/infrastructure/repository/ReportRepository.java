@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 
 import com.example.demoapp.dto.ReportDto;
 import com.example.demoapp.infrastructure.entity.ReportEntity;
+import com.example.demoapp.type.Status;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
@@ -34,11 +35,33 @@ public class ReportRepository {
         em.persist(entity);
     }
 
+    public void apply(Integer id) {
+        ReportEntity entity = em.find(ReportEntity.class, id);
+        entity.setStatus(Status.C02_WAIT_REVIEW);
+
+        em.merge(entity);
+    }
+
+    public void approve(Integer id) {
+        ReportEntity entity = em.find(ReportEntity.class, id);
+        entity.setStatus(Status.C03_COMPLETED);
+
+        em.merge(entity);
+    }
+
+    public void remand(Integer id) {
+        ReportEntity entity = em.find(ReportEntity.class, id);
+        entity.setStatus(Status.C01_CREATING);
+
+        em.merge(entity);
+    }
+
     static private ReportDto convertToDto(ReportEntity entity) {
         ReportDto report = new ReportDto();
         report.setReportId(entity.getReportId());
         report.setTitle(entity.getTitle());
         report.setDetail(entity.getDetail());
+        report.setStatus(entity.getStatus());
 
         return report;
     }
@@ -48,6 +71,7 @@ public class ReportRepository {
         report.setReportId(dto.getReportId());
         report.setTitle(dto.getTitle());
         report.setDetail(dto.getDetail());
+        report.setStatus(dto.getStatus());
 
         return report;
     }

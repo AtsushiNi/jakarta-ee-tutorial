@@ -1,7 +1,11 @@
 package com.example.demoapp.infrastructure.entity;
 
+import com.example.demoapp.type.Status;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,4 +30,8 @@ public class ReportEntity {
     @Lob
     @Column(name = "detail")
     private String detail;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Status status;
 }

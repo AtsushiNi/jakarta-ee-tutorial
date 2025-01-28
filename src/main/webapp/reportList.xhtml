@@ -10,6 +10,9 @@
                 <p:column headerText="タイトル">
                     <h:outputText value="#{report.title}" />
                 </p:column>
+                <p:column headerText="ステータス">
+                    <h:outputText value="#{report.status.label}" />
+                </p:column>
             </p:dataTable>
         </h:form>
     </ui:define>
