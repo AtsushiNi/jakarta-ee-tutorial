@@ -20,4 +20,5 @@ public class ReportDto {
     private Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private UserDto creator;
 }

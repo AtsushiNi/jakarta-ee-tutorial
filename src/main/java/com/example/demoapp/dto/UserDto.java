@@ -1,5 +1,7 @@
 package com.example.demoapp.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ public class UserDto {
     private String email;
     private String password;
     private String hashedPassword;
+    private List<ReportDto> reports;
 
     public String getFullName() {
         return firstName + " " + lastName;

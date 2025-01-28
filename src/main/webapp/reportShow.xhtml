@@ -25,6 +25,10 @@
                 <h:outputText id="status-output" value="#{reportShowBean.status.label}" />
             </div>
             <div class="field col-12 md:col-6">
+                <p:outputLabel for="creator-output" value="起票者" style="width: 120px" />
+                <h:outputText id="creator-output" value="#{reportShowBean.creator.fullName}" />
+            </div>
+            <div class="field col-12 md:col-6">
                 <p:outputLabel for="created-at-output" value="作成日時" style="width: 120px" />
                 <h:outputText id="created-at-output" value="#{reportShowBean.createdAt}" converter="localDateTimeConverter" />
             </div>
