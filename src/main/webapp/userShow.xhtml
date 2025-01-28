@@ -4,6 +4,11 @@
     <ui:define name="content">
         <p:importEnum type="com.example.demoapp.type.Status" var="Status" />
 
+        <f:metadata>
+            <f:viewParam name="userId" value="#{userShowBean.userId}" />
+            <f:event type="preRenderView" listener="#{userShowBean.initUser}" />
+        </f:metadata>
+
         <h:form>
             <div>
                 <div class="flex flex-column align-items-center text-center">
