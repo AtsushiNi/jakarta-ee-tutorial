@@ -23,10 +23,11 @@ public class ReportNewBean {
     @Inject
     private ReportRepository reportRepository;
 
-    public void create() {
+    public String create() {
         ReportDto newReport = new ReportDto();
         newReport.setTitle(title);
         newReport.setDetail(detail);
         reportRepository.create(newReport);
+        return "/reportList.xhtml?faces-redirect=true";
     }
 }
