@@ -1,5 +1,8 @@
 package com.example.demoapp.infrastructure.converter;
 
+import java.util.List;
+
+import com.example.demoapp.dto.HistoryDto;
 import com.example.demoapp.dto.ReportDto;
 import com.example.demoapp.infrastructure.entity.ReportEntity;
 import com.example.demoapp.infrastructure.entity.UserEntity;
@@ -23,6 +26,21 @@ public class ReportConverter {
         reportDto.setUpdatedAt(reportEntity.getUpdatedAt());
 
         reportDto.setCreator(userConverter.toDto(reportEntity.getCreator()));
+
+        return reportDto;
+    }
+
+    public ReportDto toDtoWithHistories(ReportEntity reportEntity) {
+        ReportDto reportDto = toDto(reportEntity);
+
+        List<HistoryDto> histories = reportEntity.getHistories().stream().map(historyEntity -> {
+            HistoryDto history = new HistoryDto();
+            history.setActionType(historyEntity.getActionType());
+            history.setCreatedAt(historyEntity.getCreatedAt());
+            history.setUser(userConverter.toDto(historyEntity.getUser()));
+            return history;
+        }).toList();
+        reportDto.setHistories(histories);
 
         return reportDto;
     }

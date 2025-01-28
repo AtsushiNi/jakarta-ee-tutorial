@@ -2,8 +2,10 @@ package com.example.demoapp.presentation.backingbean;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
+import com.example.demoapp.dto.HistoryDto;
 import com.example.demoapp.dto.ReportDto;
 import com.example.demoapp.dto.UserDto;
 import com.example.demoapp.infrastructure.repository.ReportRepository;
@@ -29,6 +31,7 @@ public class ReportShowBean implements Serializable {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private UserDto creator;
+    private List<HistoryDto> histories;
 
     @Inject
     private ReportRepository reportRepository;
@@ -67,6 +70,7 @@ public class ReportShowBean implements Serializable {
             createdAt = report.getCreatedAt();
             updatedAt = report.getUpdatedAt();
             creator = report.getCreator();
+            histories = report.getHistories();
         }
     }
 }

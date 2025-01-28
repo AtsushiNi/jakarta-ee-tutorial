@@ -37,6 +37,18 @@
                 <h:outputText id="updated-at-output" value="#{reportShowBean.updatedAt}" converter="localDateTimeConverter" />
             </div>
         </div>
+
+        <p:dataTable value="#{reportShowBean.histories}" var="history" class="mt-5">
+            <p:column headerText="操作">
+                <h:outputText value="#{history.actionType.label}" />
+            </p:column>
+            <p:column headerText="ユーザー名">
+                <h:outputText value="#{history.user.fullName}" />
+            </p:column>
+            <p:column headerText="日時">
+                <h:outputText value="#{history.createdAt}" converter="localDateTimeConverter" />
+            </p:column>
+        </p:dataTable>
     </ui:define>
 
 </ui:composition>
